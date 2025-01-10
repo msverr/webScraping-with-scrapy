@@ -47,24 +47,16 @@ class BookscraperPipeline:
         adapter["num_reviews"] = int(num_reviews_string)
 
         # convert stars rating to number
-        stars_rating = adapter.get("stars").lower()
-        if stars_rating == "zero":
-            adapter["stars"] = 0
-        elif stars_rating == "one":
-            adapter["stars"] = 1
-        elif stars_rating == "two":
-            adapter["stars"] = 2
-        elif stars_rating == "three":
-            adapter["stars"] = 3
-        elif stars_rating == "four":
-            adapter["stars"] = 4
-        else:
-            adapter["stars"] = 5
+        ratings = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5}
+        rating = adapter.get("stars")
+        if rating:
+            adapter["rating"] = ratings[rating]
 
         return item
 
 
 import mysql.connector
+
 
 class SaveToMySQLPipeline:
 
